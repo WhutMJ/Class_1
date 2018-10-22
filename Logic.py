@@ -25,25 +25,26 @@ class Logic:
                     self.array[i][j] = 1
                 else:
                     self.array[i][j] = 0
-
+    @profile
     def Judge(self):
         new_array = np.zeros(self.size)
         # print(self.array)
-        for i in range(self.array.shape[0]):
-            for j in range(self.array.shape[1]):            # 遍历矩阵中的每一个细胞
+        x = self.array.shape[0]
+        y = self.array.shape[1]
+        for i in range(x):
+            for j in range(y):            # 遍历矩阵中的每一个细胞
                 # print(self.array[i][j])
                 times = 0
                 start_row = i-1
                 start_column = j-1
                 for index in range(9):
-                    if (start_row + int(index / 3)) >= 0 \
-                        and (start_column + int(index % 3)) >= 0\
-                        and (start_row + int(index / 3)) < self.array.shape[0] \
-                        and (start_column + int(index % 3)) < self.array.shape[1]:
+                    row_now = start_row + int(index / 3)
+                    column_now = start_column + int(index % 3)
+                    if row_now >= 0 and column_now >= 0 and row_now < x and column_now < y:
                         # print(start_row + index / 3)
                         if index == 4:
                             continue
-                        if self.array[start_row + int(index / 3)][start_column + int(index % 3)] == 1:
+                        if self.array[row_now][column_now] == 1:
                             times += 1
                     else:
                         continue
@@ -63,7 +64,8 @@ class Logic:
         # print(self.array)
 
 
-if __name__ == "__main__":
-    static = Logic(2)
+def start():
+    static = Logic('test_1_JPG_63x25.jpg')
     static.Judge()
     print(static.array)
+
